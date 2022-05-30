@@ -6,8 +6,6 @@ public class Board {
     public Board(int n) {
         //check if n between 10 and 20
         this.board = createBoard(n);
-
-
     }
 
     private Pawn[][] createBoard(int n) {
@@ -53,8 +51,8 @@ public class Board {
         return result;
     }
 
-    public static void removePawn() {
-
+    public void removePawn(int x, int y) {
+        board[x][y] = null;
     }
 
     public void movePawn() {
