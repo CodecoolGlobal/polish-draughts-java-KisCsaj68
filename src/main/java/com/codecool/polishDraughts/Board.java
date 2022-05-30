@@ -55,7 +55,10 @@ public class Board {
         board[x][y] = null;
     }
 
-    public void movePawn() {
+    public void movePawn(int x, int y, int nextX, int nextY) {
+        String color = board[x][y].getColor();
+        removePawn(x,y);
+        board[nextX][nextY] = new Pawn(color, nextX, nextY);
 
     }
 

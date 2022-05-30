@@ -10,7 +10,7 @@ public class Pawn {
 
     }
 
-    public static boolean isCrowned() {
+    public boolean isCrowned() {
         return false;
     }
 
@@ -18,5 +18,9 @@ public class Pawn {
     public String toString() {
         return color.getColor().equals("white") ? "☻" : "☺";
 
+    }
+
+    public String getColor() {
+        return this.color.getColor();
     }
 }
