@@ -16,7 +16,7 @@ public class Pawn {
 
     @Override
     public String toString() {
-        return "P[" + (color.getColor().equals("black") ? "b" : "w") + "]";
+        return color.getColor().equals("black") ? "☻" : "☺";
 
     }
 }

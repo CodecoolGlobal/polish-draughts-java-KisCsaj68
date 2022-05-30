@@ -22,6 +22,17 @@ public class Board {
                     result[i][j] = null;
                 }
             }
+            for (int k = n - 4; k < n; k++) {
+                for (int l = 0; l < n; l++) {
+                    if (k % 2 == 0 && l % 2 != 0) {
+                        result[k][l] = new Pawn("white", k, l);
+                    } else if (k % 2 != 0 && l % 2 == 0) {
+                        result[k][l] = new Pawn("white", k, l);
+                    } else {
+                        result[k][l] = null;
+                    }
+                }
+            }
         }
         return result;
     }
@@ -32,9 +43,9 @@ public class Board {
         for (int i = 0; i < this.board.length; i++) {
             for (int j = 0; j < this.board[0].length; j++) {
                 if (board[i][j] != null) {
-                    System.out.print(board[i][j].toString());
+                    System.out.print(" " + board[i][j].toString() + " ");
                 } else {
-                    System.out.print(" .. ");
+                    System.out.print(" . ");
                 }
             }
             System.out.println();
