@@ -2,6 +2,7 @@ package com.codecool.polishDraughts;
 
 public class Board {
     private Pawn[][] board;
+    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     public Board(int n) {
         //check if n between 10 and 20
@@ -38,7 +39,14 @@ public class Board {
     @Override
     public String toString() {
         String result = "";
+
+        System.out.print("   ");
+        for(int index = 1; index <= this.board[0].length; index++) {
+            System.out.print(index + "  ");
+        }
+        System.out.println();
         for (int i = 0; i < this.board.length; i++) {
+            System.out.print(alphabet.toUpperCase().charAt(i) + " ");
             for (int j = 0; j < this.board[0].length; j++) {
                 if (board[i][j] != null) {
                     System.out.print(" " + board[i][j].toString() + " ");
