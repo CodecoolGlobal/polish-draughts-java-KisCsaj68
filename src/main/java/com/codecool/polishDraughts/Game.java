@@ -17,15 +17,13 @@ public class Game {
         int[] moveFrom = getMovePawnFrom(player);
         int[] moveTo = getMovePawnTo(player);
 
-        while (!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !checkToField(moveTo[0], moveTo[1])) {
+        while (!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
             if(!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1])){
                 moveFrom = getMovePawnFrom(player);
-            } else if (!checkToField(moveTo[0], moveTo[1])) {
+            } else if (!checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
                 moveTo = getMovePawnTo(player);
-
             }
         }
-
     }
 
     public int[] getMovePawnFrom(Player player) {
@@ -51,7 +49,7 @@ public class Game {
     }
 
     public boolean tryToMakeMove(Player player, int rowFrom, int columnFrom, int rowTo, int columnTo) {
-        return checkPlayerAndPawnColor(player, rowFrom, columnFrom) && checkToField(rowTo, columnTo);
+        return checkPlayerAndPawnColor(player, rowFrom, columnFrom) || checkToField(rowTo, columnTo) || checkDiagonalMove(rowFrom, columnFrom, rowTo, columnTo);
     }
 
     public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
@@ -71,6 +69,10 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public boolean checkDiagonalMove(int rowFrom, int columnFrom, int rowTo, int columnTo) {
+        return (Math.abs(rowFrom-rowTo) - Math.abs(columnFrom-columnTo) == 0);
     }
 
     public static boolean checkForWinner() {
