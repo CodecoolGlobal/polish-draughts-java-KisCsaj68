@@ -31,7 +31,7 @@ public class Game {
         while  (invalidMove(moveFrom, moveTo)) {
                 moveTo = getMovePawnTo(player);
             }
-
+        this.gameBoard.movePawn(moveFrom.getX(),moveFrom.getY(), moveTo.getX(), moveTo.getY());
     }
 
     private boolean invalidMove(Coordinate moveFrom, Coordinate moveTo) {
@@ -65,12 +65,12 @@ public class Game {
     public Coordinate getMovePawnFrom(Player player) {
         int rowFrom = -1;
         try{
-            rowFrom = player.getUserInputRow("Row from move: " + player.getColor()) - POSITION_A;
+            rowFrom = player.getUserInputRow(player.getColor() + " Player: Enter row for Pawn to pick: ") - POSITION_A;
         }
         catch (Exception e) {
 
         }
-        int column = player.getUserInputColumn("Column from move: " + player.getColor());
+        int column = player.getUserInputColumn(player.getColor() + " Player: Enter column for Pawn to pick: ");
         Coordinate result = new Coordinate(rowFrom,column);
 
 //        int row = (int) player.getUserInputRow("Row from move: " + player.getColor());
@@ -87,12 +87,12 @@ public class Game {
     public Coordinate getMovePawnTo(Player player) {
         int rowTo = -1;
         try{
-            rowTo = player.getUserInputRow("Row to move: " + player.getColor()) - POSITION_A;
+            rowTo = player.getUserInputRow(player.getColor() + " Player: Enter row for place to move: ") - POSITION_A;
         }
         catch (Exception e) {
 
         }
-        int columnTo = player.getUserInputColumn("Column to move: " + player.getColor());
+        int columnTo = player.getUserInputColumn(player.getColor() + " Player: Enter column for place to move: ");
         Coordinate result = new Coordinate(rowTo,columnTo);
 //        int[] result = new int[2];
 //        int rowTo = (int)player.getUserInputRow("Row to move: " + player.getColor());
