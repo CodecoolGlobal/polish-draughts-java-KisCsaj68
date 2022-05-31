@@ -23,4 +23,8 @@ public class Pawn {
     public String getColor() {
         return this.color.getColor();
     }
+
+    public Coordinates getCoordinates() {
+        return this.coordinates;
+    }
 }

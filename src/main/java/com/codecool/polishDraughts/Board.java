@@ -62,5 +62,8 @@ public class Board {
 
     }
 
+    public Pawn[][] getBoard() {
+        return this.board;
+    }
 
 }
