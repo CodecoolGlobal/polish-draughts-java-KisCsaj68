@@ -17,10 +17,10 @@ public class Game {
         int[] moveFrom = getMovePawnFrom(player);
         int[] moveTo = getMovePawnTo(player);
 
-        while (!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
-            if(!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1])){
+        while (!gameBoard.checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !gameBoard.checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
+            if(!gameBoard.checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1])){
                 moveFrom = getMovePawnFrom(player);
-            } else if (!checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
+            } else if (!gameBoard.checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
                 moveTo = getMovePawnTo(player);
             }
         }
@@ -49,26 +49,9 @@ public class Game {
     }
 
     public boolean tryToMakeMove(Player player, int rowFrom, int columnFrom, int rowTo, int columnTo) {
-        return checkPlayerAndPawnColor(player, rowFrom, columnFrom) || checkToField(rowTo, columnTo) || checkDiagonalMove(rowFrom, columnFrom, rowTo, columnTo);
-    }
-
-    public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
-        Pawn[][] board = this.gameBoard.getBoard();
-        if (board[row][column] == null) {
-            return false;
-        }
-        String playerColor = player.getColor();
-        String pawnColor = board[row][column].getColor();
-
-        return playerColor.equals(pawnColor);
-    }
-
-    public boolean checkToField(int row, int column) {
-        Pawn[][] board = this.gameBoard.getBoard();
-        if (board[row][column] == null) {
-            return true;
-        }
-        return false;
+        return gameBoard.checkPlayerAndPawnColor(player, rowFrom, columnFrom)
+                || gameBoard.checkToField(rowTo, columnTo)
+                || checkDiagonalMove(rowFrom, columnFrom, rowTo, columnTo);
     }
 
     public boolean checkDiagonalMove(int rowFrom, int columnFrom, int rowTo, int columnTo) {
