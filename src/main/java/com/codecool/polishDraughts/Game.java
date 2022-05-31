@@ -1,6 +1,5 @@
 package com.codecool.polishDraughts;
 
-import org.w3c.dom.ls.LSOutput;
 
 public class Game {
     private Board gameBoard = new Board(10);
@@ -15,14 +14,18 @@ public class Game {
 
     public void playRound(Player player) {
         this.gameBoard.toString();
-        int[] move = getMovePawnFrom(player);
-        while(!checkPlayerAndPawnColor(player, move[0], move[1])) {
-            move = getMovePawnFrom(player);
+        int[] moveFrom = getMovePawnFrom(player);
+        int[] moveTo = getMovePawnTo(player);
+
+        while (!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !checkToField(moveTo[0], moveTo[1])) {
+            if(!checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1])){
+                moveFrom = getMovePawnFrom(player);
+            } else if (!checkToField(moveTo[0], moveTo[1])) {
+                moveTo = getMovePawnTo(player);
+
+            }
         }
 
-         //System.out.println(tryToMakeMove(player, rowFrom, columnFrom, rowTo, columnTo));
-
-        //this.gameBoard.removePawn(row, column);
     }
 
     public int[] getMovePawnFrom(Player player) {
@@ -48,18 +51,26 @@ public class Game {
     }
 
     public boolean tryToMakeMove(Player player, int rowFrom, int columnFrom, int rowTo, int columnTo) {
-        return checkPlayerAndPawnColor(player, rowFrom, rowTo);
+        return checkPlayerAndPawnColor(player, rowFrom, columnFrom) && checkToField(rowTo, columnTo);
     }
 
     public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
         Pawn[][] board = this.gameBoard.getBoard();
-        if(board[row][column] == null) {
+        if (board[row][column] == null) {
             return false;
         }
         String playerColor = player.getColor();
         String pawnColor = board[row][column].getColor();
 
         return playerColor.equals(pawnColor);
+    }
+
+    public boolean checkToField(int row, int column) {
+        Pawn[][] board = this.gameBoard.getBoard();
+        if (board[row][column] == null) {
+            return true;
+        }
+        return false;
     }
 
     public static boolean checkForWinner() {
