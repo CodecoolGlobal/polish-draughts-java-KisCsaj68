@@ -15,15 +15,36 @@ public class Game {
 
     public void playRound(Player player) {
         this.gameBoard.toString();
-        int rowFrom = player.getUserInput("Row from move: ");
-        int columnFrom = player.getUserInput("Column from move: ");
+        int[] move = getMovePawnFrom(player);
+        while(!checkPlayerAndPawnColor(player, move[0], move[1])) {
+            move = getMovePawnFrom(player);
+        }
 
-        int rowTo = player.getUserInput("Row to move: ");
-        int columnTo = player.getUserInput("Column to move: ");
-
-         System.out.println(tryToMakeMove(player, rowFrom, columnFrom, rowTo, columnTo));
+         //System.out.println(tryToMakeMove(player, rowFrom, columnFrom, rowTo, columnTo));
 
         //this.gameBoard.removePawn(row, column);
+    }
+
+    public int[] getMovePawnFrom(Player player) {
+        int[] result = new int[2];
+        int rowFrom = player.getUserInput("Row from move: " + player.getColor());
+        int columnFrom = player.getUserInput("Column from move: " + player.getColor());
+
+        result[0] = rowFrom;
+        result[1] = columnFrom;
+
+        return result;
+    }
+
+    public int[] getMovePawnTo(Player player) {
+        int[] result = new int[2];
+        int rowTo = player.getUserInput("Row to move: " + player.getColor());
+        int columnTo = player.getUserInput("Column to move: " + player.getColor());
+
+        result[0] = rowTo;
+        result[1] = columnTo;
+
+        return result;
     }
 
     public boolean tryToMakeMove(Player player, int rowFrom, int columnFrom, int rowTo, int columnTo) {
@@ -32,8 +53,12 @@ public class Game {
 
     public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
         Pawn[][] board = this.gameBoard.getBoard();
+        if(board[row][column] == null) {
+            return false;
+        }
         String playerColor = player.getColor();
         String pawnColor = board[row][column].getColor();
+
         return playerColor.equals(pawnColor);
     }
 
