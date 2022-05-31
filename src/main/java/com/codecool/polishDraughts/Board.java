@@ -62,6 +62,23 @@ public class Board {
 
     }
 
+    public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
+        if (this.board[row][column] == null) {
+            return false;
+        }
+        String playerColor = player.getColor();
+        String pawnColor = this.board[row][column].getColor();
+
+        return playerColor.equals(pawnColor);
+    }
+
+    public boolean checkToField(int row, int column) {
+        if (this.board[row][column] == null) {
+            return true;
+        }
+        return false;
+    }
+
     public Pawn[][] getBoard() {
         return this.board;
     }
