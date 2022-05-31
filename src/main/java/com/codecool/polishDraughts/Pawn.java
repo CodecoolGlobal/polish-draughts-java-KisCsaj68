@@ -2,11 +2,11 @@ package com.codecool.polishDraughts;
 
 public class Pawn {
     Color color;
-    Coordinates coordinates;
+    Coordinate coordinate;
 
     public Pawn(String color, int x, int y) {
         this.color = new Color(color);
-        this.coordinates = new Coordinates(x, y);
+        this.coordinate = new Coordinate(x, y);
 
     }
 
@@ -24,7 +24,7 @@ public class Pawn {
         return this.color.getColor();
     }
 
-    public Coordinates getCoordinates() {
-        return this.coordinates;
+    public Coordinate getCoordinates() {
+        return this.coordinate;
     }
 }

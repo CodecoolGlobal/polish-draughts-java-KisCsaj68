@@ -2,9 +2,18 @@ package com.codecool.polishDraughts;
 
 
 public class Game {
-    private Board gameBoard = new Board(10);
-    private Player playerOne = new Player("black");
-    private Player playerTwo = new Player("white");
+    private static final int POSITION_A= 97;
+
+    private Board gameBoard;
+    private Player playerOne;
+    private Player playerTwo;
+
+    public Game(int size) {
+        this.gameBoard = new Board(size);
+        this.playerOne = new Player("black");
+        this.playerTwo = new Player("white");
+
+    }
 
     public void start() {
         playRound(playerOne);
@@ -14,45 +23,89 @@ public class Game {
 
     public void playRound(Player player) {
         this.gameBoard.toString();
-        int[] moveFrom = getMovePawnFrom(player);
-        int[] moveTo = getMovePawnTo(player);
-
-        while (!gameBoard.checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1]) || !gameBoard.checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
-            if(!gameBoard.checkPlayerAndPawnColor(player, moveFrom[0], moveFrom[1])){
+        Coordinate moveFrom = getMovePawnFrom(player);
+        while (invalidPawnPick(player, moveFrom)) {
                 moveFrom = getMovePawnFrom(player);
-            } else if (!gameBoard.checkToField(moveTo[0], moveTo[1]) || !checkDiagonalMove(moveFrom[0], moveFrom[1], moveTo[0], moveTo[1])) {
+            }
+        Coordinate moveTo = getMovePawnTo(player);
+        while  (invalidMove(moveFrom, moveTo)) {
                 moveTo = getMovePawnTo(player);
             }
+
+    }
+
+    private boolean invalidMove(Coordinate moveFrom, Coordinate moveTo) {
+        return !isCoordinateOnBoard(moveTo) || !isFieldEmpty(moveTo.getX(), moveTo.getY()) || !isValidDiagonalMove(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
+    }
+
+//    private boolean tryToMakeMove(Coordinate moveFrom, Coordinate moveTo) {
+//        return false;
+//    }
+
+    private boolean isValidDiagonalMove(int moveFromX, int moveFromY, int moveToX, int moveToY) {
+        return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY);
+    }
+
+    private boolean isFieldEmpty(int moveToX, int moveToY) {
+        return gameBoard.checkToField(moveToX, moveToY);
+    }
+
+    private boolean invalidPawnPick(Player player, Coordinate moveFrom) {
+        return !isCoordinateOnBoard(moveFrom) || !isCorrectColorPicked(player, moveFrom.getX(), moveFrom.getY());
+    }
+
+    private boolean isCoordinateOnBoard(Coordinate moveFrom) {
+        return gameBoard.checkCoordinateOnBoard(moveFrom.getX(), moveFrom.getY());
+    }
+
+    private boolean isCorrectColorPicked(Player player, int moveFromX, int moveFromY) {
+        return gameBoard.checkPlayerAndPawnColor(player, moveFromX, moveFromY);
+    }
+
+    public Coordinate getMovePawnFrom(Player player) {
+        int rowFrom = -1;
+        try{
+            rowFrom = player.getUserInputRow("Row from move: " + player.getColor()) - POSITION_A;
         }
-    }
+        catch (Exception e) {
 
-    public int[] getMovePawnFrom(Player player) {
-        int[] result = new int[2];
-        int rowFrom = player.getUserInput("Row from move: " + player.getColor());
-        int columnFrom = player.getUserInput("Column from move: " + player.getColor());
+        }
+        int column = player.getUserInputColumn("Column from move: " + player.getColor());
+        Coordinate result = new Coordinate(rowFrom,column);
 
-        result[0] = rowFrom;
-        result[1] = columnFrom;
-
-        return result;
-    }
-
-    public int[] getMovePawnTo(Player player) {
-        int[] result = new int[2];
-        int rowTo = player.getUserInput("Row to move: " + player.getColor());
-        int columnTo = player.getUserInput("Column to move: " + player.getColor());
-
-        result[0] = rowTo;
-        result[1] = columnTo;
+//        int row = (int) player.getUserInputRow("Row from move: " + player.getColor());
+//        Coordinate result = new Coordinate(row, column);
+//        Character rowFrom = player.getUserInputRow("Row from move: " + player.getColor());
+//        int columnFrom = player.getUserInput("Column from move: " + player.getColor());
+//
+//        result[0] = rowFrom;
+//        result[1] = columnFrom;
 
         return result;
     }
 
-    public boolean tryToMakeMove(Player player, int rowFrom, int columnFrom, int rowTo, int columnTo) {
-        return gameBoard.checkPlayerAndPawnColor(player, rowFrom, columnFrom)
-                || gameBoard.checkToField(rowTo, columnTo)
-                || checkDiagonalMove(rowFrom, columnFrom, rowTo, columnTo);
+    public Coordinate getMovePawnTo(Player player) {
+        int rowTo = -1;
+        try{
+            rowTo = player.getUserInputRow("Row to move: " + player.getColor()) - POSITION_A;
+        }
+        catch (Exception e) {
+
+        }
+        int columnTo = player.getUserInputColumn("Column to move: " + player.getColor());
+        Coordinate result = new Coordinate(rowTo,columnTo);
+//        int[] result = new int[2];
+//        int rowTo = (int)player.getUserInputRow("Row to move: " + player.getColor());
+//        int columnTo = player.getUserInput("Column to move: " + player.getColor());
+//
+//        result[0] = rowTo;
+//        result[1] = columnTo;
+
+        return result;
     }
+
+
+
 
     public boolean checkDiagonalMove(int rowFrom, int columnFrom, int rowTo, int columnTo) {
         return (Math.abs(rowFrom-rowTo) - Math.abs(columnFrom-columnTo) == 0);

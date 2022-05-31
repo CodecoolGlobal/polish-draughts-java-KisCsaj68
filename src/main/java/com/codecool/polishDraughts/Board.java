@@ -87,6 +87,13 @@ public class Board {
         return false;
     }
 
+    public boolean checkCoordinateOnBoard(int row, int column) {
+        if ( row < this.board.length && row >= 0 && column>=0 && column<this.board.length) {
+            return true;
+        }
+        return false;
+    }
+
     public Pawn[][] getBoard() {
         return this.board;
     }

@@ -1,10 +1,10 @@
 package com.codecool.polishDraughts;
 
-public class Coordinates {
+public class Coordinate {
     int x;
     int y;
 
-    public Coordinates (int x, int y) {
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
