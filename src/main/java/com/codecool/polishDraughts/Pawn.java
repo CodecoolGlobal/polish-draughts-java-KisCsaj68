@@ -24,7 +24,10 @@ public class Pawn {
 
     @Override
     public String toString() {
-        return color.getColor().equals("white") ? "☻" : "☺";
+        if(!isCrowned) {
+            return color.getColor().equals("white") ? "☻" : "☺";
+        }
+        return color.getColor().equals("white") ? "■" : "⌂";
 
     }
 
