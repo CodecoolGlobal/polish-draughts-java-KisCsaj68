@@ -34,10 +34,12 @@ public class Game {
         this.gameBoard.toString();
         Coordinate moveFrom = getMovePawnFrom(player);
         while (invalidPawnPick(player, moveFrom)) {
+            System.out.println("Invalid Pawn pick! Try again!");
             moveFrom = getMovePawnFrom(player);
         }
         Coordinate moveTo = getMovePawnTo(player);
         while (invalidMove(player, moveFrom, moveTo)) {
+            System.out.println("Invalid Pawn move! Try again!");
             moveTo = getMovePawnTo(player);
         }
         this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
