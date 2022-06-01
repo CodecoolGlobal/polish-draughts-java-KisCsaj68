@@ -2,7 +2,7 @@ package com.codecool.polishDraughts;
 
 
 public class Game {
-    private static final int POSITION_A= 97;
+    private static final int POSITION_A = 97;
 
     private Board gameBoard;
     private Player playerOne;
@@ -16,10 +16,8 @@ public class Game {
     }
 
     public void start() {
-
         Player winner  = null;
         while(!checkForWinner()) {
-
             playRound(playerOne);
             this.gameBoard.toString();
             System.out.println("--------------------------------");
@@ -36,13 +34,13 @@ public class Game {
         this.gameBoard.toString();
         Coordinate moveFrom = getMovePawnFrom(player);
         while (invalidPawnPick(player, moveFrom)) {
-                moveFrom = getMovePawnFrom(player);
-            }
+            moveFrom = getMovePawnFrom(player);
+        }
         Coordinate moveTo = getMovePawnTo(player);
-        while  (invalidMove(moveFrom, moveTo)) {
-                moveTo = getMovePawnTo(player);
-            }
-        this.gameBoard.movePawn(moveFrom.getX(),moveFrom.getY(), moveTo.getX(), moveTo.getY());
+        while (invalidMove(moveFrom, moveTo)) {
+            moveTo = getMovePawnTo(player);
+        }
+        this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
     }
 
     private boolean invalidMove(Coordinate moveFrom, Coordinate moveTo) {
@@ -75,14 +73,13 @@ public class Game {
 
     public Coordinate getMovePawnFrom(Player player) {
         int rowFrom = -1;
-        try{
+        try {
             rowFrom = player.getUserInputRow(player.getColor() + " Player: Enter row for Pawn to pick: ") - POSITION_A;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
         int column = player.getUserInputColumn(player.getColor() + " Player: Enter column for Pawn to pick: ");
-        Coordinate result = new Coordinate(rowFrom,column);
+        Coordinate result = new Coordinate(rowFrom, column);
 
 //        int row = (int) player.getUserInputRow("Row from move: " + player.getColor());
 //        Coordinate result = new Coordinate(row, column);
@@ -97,14 +94,13 @@ public class Game {
 
     public Coordinate getMovePawnTo(Player player) {
         int rowTo = -1;
-        try{
+        try {
             rowTo = player.getUserInputRow(player.getColor() + " Player: Enter row for place to move: ") - POSITION_A;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
         int columnTo = player.getUserInputColumn(player.getColor() + " Player: Enter column for place to move: ");
-        Coordinate result = new Coordinate(rowTo,columnTo);
+        Coordinate result = new Coordinate(rowTo, columnTo);
 //        int[] result = new int[2];
 //        int rowTo = (int)player.getUserInputRow("Row to move: " + player.getColor());
 //        int columnTo = player.getUserInput("Column to move: " + player.getColor());
@@ -116,11 +112,13 @@ public class Game {
     }
 
 
-
-
     public boolean checkDiagonalMove(int rowFrom, int columnFrom, int rowTo, int columnTo) {
-        return (Math.abs(rowFrom-rowTo) - Math.abs(columnFrom-columnTo) == 0);
+        return (Math.abs(rowFrom - rowTo) - Math.abs(columnFrom - columnTo) == 0);
     }
+
+
+    public Player checkForWinner() {
+        return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
 
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
         if(player.getColor().equals("black")) {
@@ -130,9 +128,6 @@ public class Game {
         }
     }
 
-    public static boolean checkForWinner() {
-        return true;
-    }
 
     public static String theWinner(Player player) {
 
