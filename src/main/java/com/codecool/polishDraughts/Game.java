@@ -17,7 +17,7 @@ public class Game {
 
     public void start() {
         Player winner  = null;
-        while(!checkForWinner()) {
+        while(checkForWinner() == null) {
             playRound(playerOne);
             this.gameBoard.toString();
             System.out.println("--------------------------------");
@@ -37,22 +37,23 @@ public class Game {
             moveFrom = getMovePawnFrom(player);
         }
         Coordinate moveTo = getMovePawnTo(player);
-        while (invalidMove(moveFrom, moveTo)) {
+        while (invalidMove(player, moveFrom, moveTo)) {
             moveTo = getMovePawnTo(player);
         }
         this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
     }
 
-    private boolean invalidMove(Coordinate moveFrom, Coordinate moveTo) {
-        return !isCoordinateOnBoard(moveTo) || !isFieldEmpty(moveTo.getX(), moveTo.getY()) || !isValidDiagonalMove(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
+    private boolean invalidMove(Player player, Coordinate moveFrom, Coordinate moveTo) {
+        return !isCoordinateOnBoard(moveTo) || !isFieldEmpty(moveTo.getX(), moveTo.getY()) ||
+                !isValidDiagonalMove(player, moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
     }
 
 //    private boolean tryToMakeMove(Coordinate moveFrom, Coordinate moveTo) {
 //        return false;
 //    }
 
-    private boolean isValidDiagonalMove(int moveFromX, int moveFromY, int moveToX, int moveToY) {
-        return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY);
+    private boolean isValidDiagonalMove(Player player, int moveFromX, int moveFromY, int moveToX, int moveToY) {
+        return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY) && checkValidDiagMoveToOppnentWay(player, moveFromX, moveToX);
     }
 
     private boolean isFieldEmpty(int moveToX, int moveToY) {
@@ -120,18 +121,17 @@ public class Game {
     public Player checkForWinner() {
         return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
 
+    }
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
         if(player.getColor().equals("black")) {
-            return rowFrom < rowTo;
-        }else {
-            return  rowTo < rowFrom;
-        }
+                return rowFrom < rowTo;
+            }else {
+                return  rowTo < rowFrom;
+            }
     }
-
-
     public static String theWinner(Player player) {
 
         return "The winner player is " + player.getColor();
 
     }
-}
+    }
