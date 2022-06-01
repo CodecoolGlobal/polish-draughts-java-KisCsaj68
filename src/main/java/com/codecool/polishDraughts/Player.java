@@ -1,5 +1,6 @@
 package com.codecool.polishDraughts;
 
+import java.io.CharConversionException;
 import java.util.Scanner;
 
 public class Player {
@@ -18,12 +19,27 @@ public class Player {
         this.color = color;
     }
 
-    public int getUserInput(String question) {
+    public int getUserInputRow(String question) throws Exception{
         System.out.println(question);
         Scanner userInput = new Scanner(System.in);
-        int move = userInput.nextInt();
+        String row = userInput.next().toLowerCase();
+        if (row.length() != 1) {
+            throw new Exception();
+        }
+        char result = row.charAt(0);
+        return (int)result;
+    }
 
-        return move;
+    public int getUserInputColumn(String question) {
+        System.out.println(question);
+        Scanner userInput = new Scanner(System.in);
+        try{
+            int column = userInput.nextInt();
+            return column -1;
+        }
+        catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
 
