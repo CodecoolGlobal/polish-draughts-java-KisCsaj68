@@ -98,4 +98,28 @@ public class Board {
         return this.board;
     }
 
+    public Player hasZeroPawn(Player playerOne, Player playerTwo) {
+        int black = 0;
+        int white = 0;
+        for(int i = 0; i < this.board.length; i++){
+            for(int y =0 ; y < this.board.length; y++){
+                if(this.board[i][y] != null){
+                    String color = this.board[i][y].getColor();
+                    if(color.compareTo("black") == 0) {
+                        black += 1;
+
+                    }else {
+                        white += 1;
+                    }
+                }
+            }
+        }
+        if (black == 0) {
+            return playerTwo;
+        } else if (white == 0) {
+            return playerOne;
+
+        }
+        return null;
+    }
 }
