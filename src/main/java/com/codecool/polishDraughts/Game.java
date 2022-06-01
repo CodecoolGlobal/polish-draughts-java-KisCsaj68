@@ -17,14 +17,14 @@ public class Game {
 
     public void start() {
         Player winnerPlayer = null;
-        while(!checkForWinner()) {
+        while(checkForWinner()) {
             playRound(playerOne);
             this.gameBoard.toString();
             System.out.println("--------------------------------");
             playRound(playerTwo);
             this.gameBoard.toString();
         }
-        winnerPlayer = checkForWinner();
+        //winnerPlayer = checkForWinner();
         theWinner(winnerPlayer);
         this.gameBoard.toString();
     }
@@ -117,6 +117,14 @@ public class Game {
 
     public boolean checkDiagonalMove(int rowFrom, int columnFrom, int rowTo, int columnTo) {
         return (Math.abs(rowFrom-rowTo) - Math.abs(columnFrom-columnTo) == 0);
+    }
+
+    public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
+        if(player.getColor().equals("black")) {
+            return rowFrom < rowTo;
+        }else {
+            return  rowTo < rowFrom;
+        }
     }
 
     public static boolean checkForWinner() {
