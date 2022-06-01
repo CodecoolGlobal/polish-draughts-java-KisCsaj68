@@ -37,7 +37,7 @@ public class Player {
             int column = userInput.nextInt();
             return column -1;
         }
-        catch (NumberFormatException e) {
+        catch (Exception e) {
             return -1;
         }
     }

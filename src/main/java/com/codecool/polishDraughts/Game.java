@@ -17,7 +17,7 @@ public class Game {
 
     public void start() {
         Player winner  = null;
-        while(!checkForWinner()) {
+        while(checkForWinner() == null) {
             playRound(playerOne);
             this.gameBoard.toString();
             System.out.println("--------------------------------");
@@ -34,10 +34,12 @@ public class Game {
         this.gameBoard.toString();
         Coordinate moveFrom = getMovePawnFrom(player);
         while (invalidPawnPick(player, moveFrom)) {
+            System.out.println("Invalid pawn pick! Try again!");
             moveFrom = getMovePawnFrom(player);
         }
         Coordinate moveTo = getMovePawnTo(player);
         while (invalidMove(moveFrom, moveTo)) {
+            System.out.println("Invalid pawn move! Try again!");
             moveTo = getMovePawnTo(player);
         }
         this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
@@ -119,7 +121,7 @@ public class Game {
 
     public Player checkForWinner() {
         return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
-
+    }
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
         if(player.getColor().equals("black")) {
             return rowFrom < rowTo;
