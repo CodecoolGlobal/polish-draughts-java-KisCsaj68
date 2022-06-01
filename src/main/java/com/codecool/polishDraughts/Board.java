@@ -14,9 +14,9 @@ public class Board {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < n; j++) {
                 if (i % 2 == 0 && j % 2 != 0) {
-                    result[i][j] = new Pawn("black", i, j);
+                    result[i][j] = new Pawn("black", i, j, false);
                 } else if (i % 2 != 0 && j % 2 == 0) {
-                    result[i][j] = new Pawn("black", i, j);
+                    result[i][j] = new Pawn("black", i, j, false);
                 } else {
                     result[i][j] = null;
                 }
@@ -24,9 +24,9 @@ public class Board {
             for (int k = n - 4; k < n; k++) {
                 for (int l = 0; l < n; l++) {
                     if (k % 2 == 0 && l % 2 != 0) {
-                        result[k][l] = new Pawn("white", k, l);
+                        result[k][l] = new Pawn("white", k, l, false);
                     } else if (k % 2 != 0 && l % 2 == 0) {
-                        result[k][l] = new Pawn("white", k, l);
+                        result[k][l] = new Pawn("white", k, l, false);
                     } else {
                         result[k][l] = null;
                     }
@@ -65,9 +65,20 @@ public class Board {
 
     public void movePawn(int x, int y, int nextX, int nextY) {
         String color = board[x][y].getColor();
+        boolean isCrowned = board[x][y].isCrowned();
+        if (!isCrowned) {
+            setCrowned(color, x, y, nextX);
+        }
+        board[nextX][nextY] = board[x][y];
         removePawn(x,y);
-        board[nextX][nextY] = new Pawn(color, nextX, nextY);
+    }
 
+    private void setCrowned(String color, int x, int y, int nextX) {
+        if (color == "white" && nextX ==0) {
+            board[x][y].setCrowned(true);
+        } else if (color == "black" && nextX == this.board.length-1) {
+            board[x][y].setCrowned(true);
+        }
     }
 
     public boolean checkPlayerAndPawnColor(Player player, int row, int column) {

@@ -1,17 +1,25 @@
 package com.codecool.polishDraughts;
 
 public class Pawn {
-    Color color;
-    Coordinate coordinate;
+     private Color color;
+    private Coordinate coordinate;
+    private boolean isCrowned;
 
-    public Pawn(String color, int x, int y) {
+    public Pawn(String color, int x, int y, boolean isCrowned) {
         this.color = new Color(color);
         this.coordinate = new Coordinate(x, y);
+        this.isCrowned = isCrowned;
 
     }
 
+    public void setCrowned(boolean crowned) {
+        isCrowned = crowned;
+    }
+
+
+
     public boolean isCrowned() {
-        return false;
+        return this.isCrowned;
     }
 
     @Override
