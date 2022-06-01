@@ -16,7 +16,7 @@ public class Game {
     }
 
     public void start() {
-        Player winnerPlayer = null;
+        Player winner  = null;
         while(!checkForWinner()) {
             playRound(playerOne);
             this.gameBoard.toString();
@@ -24,9 +24,9 @@ public class Game {
             playRound(playerTwo);
             this.gameBoard.toString();
         }
-        winnerPlayer = checkForWinner();
-        theWinner(winnerPlayer);
         this.gameBoard.toString();
+        winner = checkForWinner();
+        theWinner(winner);
     }
 
     public void playRound(Player player) {
@@ -124,6 +124,6 @@ public class Game {
     }
 
     public static String theWinner(Player player) {
-        return "The winner player is " + player;
+        return "The winner player is " + player.getColor();
     }
 }
