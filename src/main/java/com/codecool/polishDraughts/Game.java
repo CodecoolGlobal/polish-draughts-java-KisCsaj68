@@ -16,10 +16,18 @@ public class Game {
     }
 
     public void start() {
-        playRound(playerOne);
+        Player winner  = null;
+        while(!checkForWinner()) {
+            playRound(playerOne);
+            this.gameBoard.toString();
+            System.out.println("--------------------------------");
+            playRound(playerTwo);
+            this.gameBoard.toString();
+        }
 
-        playRound(playerTwo);
         this.gameBoard.toString();
+        winner = checkForWinner();
+        theWinner(winner);
     }
 
     public void playRound(Player player) {
@@ -108,8 +116,22 @@ public class Game {
         return (Math.abs(rowFrom - rowTo) - Math.abs(columnFrom - columnTo) == 0);
     }
 
+
     public Player checkForWinner() {
         return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
+
+    public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
+        if(player.getColor().equals("black")) {
+            return rowFrom < rowTo;
+        }else {
+            return  rowTo < rowFrom;
+        }
     }
 
+
+    public static String theWinner(Player player) {
+
+        return "The winner player is " + player.getColor();
+
+    }
 }
