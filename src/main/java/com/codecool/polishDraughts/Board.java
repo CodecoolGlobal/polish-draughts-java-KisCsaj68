@@ -70,6 +70,7 @@ public class Board {
             setCrowned(color, x, y, nextX);
         }
         board[nextX][nextY] = board[x][y];
+        board[nextX][nextY].setCoordinate(nextX,nextY);
         removePawn(x, y);
     }
 

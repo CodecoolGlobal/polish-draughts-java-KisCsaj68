@@ -3,6 +3,12 @@ package com.codecool.polishDraughts;
 public class Pawn {
      private Color color;
     private Coordinate coordinate;
+
+    public void setCoordinate(int x, int y) {
+        Coordinate coordinate = new Coordinate(x,y);
+        this.coordinate = coordinate;
+    }
+
     private boolean isCrowned;
 
     public Pawn(String color, int x, int y, boolean isCrowned) {

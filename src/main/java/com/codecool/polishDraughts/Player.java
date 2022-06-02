@@ -42,7 +42,7 @@ public class Player {
         }
     }
 
-    public int[] getUserInput(String question) throws Exception{
+    public int[] getUserInput(String question) throws InterruptPlayRound, InvalidUserInputLength{
         int[] result = new int[2];
         System.out.println(question);
         Scanner userInput = new Scanner(System.in);
@@ -51,11 +51,11 @@ public class Player {
             System.exit(0);
         }
         if (input.equals("c")){
-            return null;
+            throw new InterruptPlayRound();
         }
 
         if (input.length() != 2) {
-            throw new Exception();
+            throw new InvalidUserInputLength();
         }
         char row = input.substring(0,1).toLowerCase().charAt(0);
         result[0] = (int)row;

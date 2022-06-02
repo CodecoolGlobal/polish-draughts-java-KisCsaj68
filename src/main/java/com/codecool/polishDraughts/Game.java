@@ -28,18 +28,40 @@ public class Game {
     }
 
     public void playRound(Player player) {
-        this.gameBoard.toString();
-        Coordinate moveFrom = getMovePawnFrom(player);
-        while (invalidPawnPick(player, moveFrom)) {
-            System.out.println("Invalid Pawn pick! Try again!");
-            moveFrom = getMovePawnFrom(player);
+        boolean hasException = true;
+        while (hasException) {
+            try {
+                this.gameBoard.toString();
+                Coordinate moveFrom = getMovePawnFrom(player);
+                while (invalidPawnPick(player, moveFrom)) {
+                    System.out.println("Invalid Pawn pick! Try again!");
+                    moveFrom = getMovePawnFrom(player);
+                }
+                Coordinate moveTo = getMovePawnTo(player);
+                while (invalidMove(player, moveFrom, moveTo)) {
+                    System.out.println("Invalid Pawn move! Try again!");
+                    moveTo = getMovePawnTo(player);
+                }
+                this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
+                hasException = false;
+            } catch (InterruptPlayRound e) {
+                    // hasException remain true
+            }
+
+
         }
-        Coordinate moveTo = getMovePawnTo(player);
-        while (invalidMove(player, moveFrom, moveTo)) {
-            System.out.println("Invalid Pawn move! Try again!");
-            moveTo = getMovePawnTo(player);
-        }
-        this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
+//        this.gameBoard.toString();
+//        Coordinate moveFrom = getMovePawnFrom(player);
+//        while (invalidPawnPick(player, moveFrom)) {
+//            System.out.println("Invalid Pawn pick! Try again!");
+//            moveFrom = getMovePawnFrom(player);
+//        }
+//        Coordinate moveTo = getMovePawnTo(player);
+//        while (invalidMove(player, moveFrom, moveTo)) {
+//            System.out.println("Invalid Pawn move! Try again!");
+//            moveTo = getMovePawnTo(player);
+//        }
+//        this.gameBoard.movePawn(moveFrom.getX(), moveFrom.getY(), moveTo.getX(), moveTo.getY());
     }
 
     private boolean invalidMove(Player player, Coordinate moveFrom, Coordinate moveTo) {
@@ -84,9 +106,10 @@ public class Game {
         return gameBoard.checkPlayerAndPawnColor(player, moveFromX, moveFromY);
     }
 
-    public Coordinate getMovePawnFrom(Player player) {
-        int rowFrom = -1;
-        int column = -1;
+    public Coordinate getMovePawnFrom(Player player) throws InterruptPlayRound {
+        int rowFrom ;
+        int column ;
+        System.out.println("move" + player.getColor());
         try {
             int[] userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
                     player.getColor().substring(1) + " player, enter coordinate Pawn to pick: ");
@@ -94,31 +117,28 @@ public class Game {
             rowFrom = userInput[0] - POSITION_A;
             column = userInput[1];
 
-        } catch (Exception e) {
-
+        }catch (InvalidUserInputLength e){
+            rowFrom = -1;
+            column = -1;
         }
+
         Coordinate result = new Coordinate(rowFrom, column);
         return result;
     }
 
-    public Coordinate getMovePawnTo(Player player) {
-        int rowTo = -1;
-        int column = -1;
+    public Coordinate getMovePawnTo(Player player) throws InterruptPlayRound {
+        int rowTo;
+        int column;
         int[] userInput;
-        try {
+        try{
             userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
                     player.getColor().substring(1) + " player, coordinate field to move: ");
-            if(userInput == null) {
-                getMovePawnFrom(player);
-                getMovePawnTo(player);
-            }else {
 
-                rowTo = userInput[0] - POSITION_A;
-                column = userInput[1];
-            }
-
-        } catch (Exception e) {
-
+            rowTo = userInput[0] - POSITION_A;
+            column = userInput[1];
+        }catch (InvalidUserInputLength e ){
+            rowTo = -1;
+            column = -1;
         }
         Coordinate result = new Coordinate(rowTo, column);
         return result;
