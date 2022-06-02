@@ -42,5 +42,26 @@ public class Player {
         }
     }
 
+    public int[] getUserInput(String question) throws Exception{
+        int[] result = new int[2];
+        System.out.println(question);
+        Scanner userInput = new Scanner(System.in);
+        String input = userInput.next();
+        if (input.length() != 2) {
+            throw new Exception();
+        }
+        char row = input.substring(0,1).toLowerCase().charAt(0);
+        result[0] = (int)row;
+        try {
+            int column = Integer.parseInt(input.substring(1));
+            result[1] = column - 1;
+        }catch (Exception e) {
+            result[1] = -1;
+        }
+
+    return result;
+    }
+
+
 
 }
