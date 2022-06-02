@@ -41,7 +41,7 @@ public class Board {
         String result = "";
 
         System.out.print("   ");
-        for(int index = 1; index <= this.board[0].length; index++) {
+        for (int index = 1; index <= this.board[0].length; index++) {
             System.out.print(index + "  ");
         }
         System.out.println();
@@ -70,13 +70,13 @@ public class Board {
             setCrowned(color, x, y, nextX);
         }
         board[nextX][nextY] = board[x][y];
-        removePawn(x,y);
+        removePawn(x, y);
     }
 
     private void setCrowned(String color, int x, int y, int nextX) {
-        if (color == "white" && nextX ==0) {
+        if (color == "white" && nextX == 0) {
             board[x][y].setCrowned(true);
-        } else if (color == "black" && nextX == this.board.length-1) {
+        } else if (color == "black" && nextX == this.board.length - 1) {
             board[x][y].setCrowned(true);
         }
     }
@@ -99,7 +99,7 @@ public class Board {
     }
 
     public boolean checkCoordinateOnBoard(int row, int column) {
-        if ( row < this.board.length && row >= 0 && column>=0 && column<this.board.length) {
+        if (row < this.board.length && row >= 0 && column >= 0 && column < this.board.length) {
             return true;
         }
         return false;
@@ -112,14 +112,13 @@ public class Board {
     public Player hasZeroPawn(Player playerOne, Player playerTwo) {
         int black = 0;
         int white = 0;
-        for(int i = 0; i < this.board.length; i++){
-            for(int y =0 ; y < this.board.length; y++){
-                if(this.board[i][y] != null){
+        for (int i = 0; i < this.board.length; i++) {
+            for (int y = 0; y < this.board.length; y++) {
+                if (this.board[i][y] != null) {
                     String color = this.board[i][y].getColor();
-                    if(color.compareTo("black") == 0) {
+                    if (color.compareTo("black") == 0) {
                         black += 1;
-
-                    }else {
+                    } else {
                         white += 1;
                     }
                 }
@@ -129,8 +128,45 @@ public class Board {
             return playerTwo;
         } else if (white == 0) {
             return playerOne;
-
         }
         return null;
+    }
+
+    public boolean isOppositePawnBetween(int moveFromX, int moveFromY, int moveToX, int moveToY, Player player) {
+        String color = player.getColor();
+        if (moveFromX < moveToX && moveFromY < moveToY) {
+            for (int i = moveFromX; i <= moveToX; i++) {
+                if (this.board[i][moveFromY + i] != null && !this.board[i][moveFromY + i].getColor().equals(color)) {
+                    removePawn(i, moveFromY + i);
+                    return true;
+                }
+
+            }
+        } else if (moveFromX < moveToX && moveFromY > moveToY) {
+            for (int i = moveFromX; i <= moveToX; i++) {
+                if (this.board[i][moveFromY - i] != null && !this.board[i][moveFromY - i].getColor().equals(color)) {
+                    removePawn(i, moveFromY - i);
+                    return true;
+                }
+            }
+
+        } else if (moveFromX > moveToX && moveFromY < moveToY) {
+            for (int i = moveFromX; i <= moveToX; i--) {
+                if (this.board[i][moveFromY + i] != null && !this.board[i][moveFromY + i].getColor().equals(color)) {
+                    removePawn(i, moveFromY + i);
+                    return true;
+                }
+            }
+        } else if (moveFromX > moveToX && moveFromY > moveToY) {
+            for (int i = moveFromX; i <= moveToX; i--) {
+                if (this.board[i][moveFromY - i] != null && !this.board[i][moveFromY - i].getColor().equals(color)) {
+                    removePawn(i, moveFromY - i);
+                    return true;
+                }
+
+            }
+
+        }
+        return false;
     }
 }

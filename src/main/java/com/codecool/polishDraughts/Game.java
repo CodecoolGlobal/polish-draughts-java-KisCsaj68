@@ -16,8 +16,8 @@ public class Game {
     }
 
     public void start() {
-        Player winner  = null;
-        while(checkForWinner() == null) {
+        Player winner = null;
+        while (checkForWinner() == null) {
             playRound(playerOne);
             this.gameBoard.toString();
             System.out.println("--------------------------------");
@@ -55,7 +55,20 @@ public class Game {
 //    }
 
     private boolean isValidDiagonalMove(Player player, int moveFromX, int moveFromY, int moveToX, int moveToY) {
-        return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY) && checkValidDiagMoveToOppnentWay(player, moveFromX, moveToX);
+        return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY) &&
+                checkValidDiagMoveToOppnentWay(player, moveFromX, moveToX) &&
+                isValidJump(moveFromX, moveFromY, moveToX, moveToY, player);
+    }
+
+    private boolean isValidJump(int moveFromX, int moveFromY, int moveToX, int moveToY, Player player) {
+        if (Math.abs(moveFromX - moveToX) > 2) {
+            return false;
+        } else if (Math.abs(moveFromX - moveToX) == 1) {
+            return true;
+
+        } else {
+            return this.gameBoard.isOppositePawnBetween(moveFromX, moveFromY, moveToX, moveToY, player);
+        }
     }
 
     private boolean isFieldEmpty(int moveToX, int moveToY) {
@@ -124,16 +137,18 @@ public class Game {
         return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
 
     }
+
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
-        if(player.getColor().equals("black")) {
-                return rowFrom < rowTo;
-            }else {
-                return  rowTo < rowFrom;
-            }
+        if (player.getColor().equals("black")) {
+            return rowFrom < rowTo;
+        } else {
+            return rowTo < rowFrom;
+        }
     }
+
     public static String theWinner(Player player) {
 
         return "The winner player is " + player.getColor();
 
     }
-    }
+}
