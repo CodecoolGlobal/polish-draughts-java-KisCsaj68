@@ -1,11 +1,11 @@
 package com.codecool.polishDraughts;
 
 public class Pawn {
-     private Color color;
+    private Color color;
     private Coordinate coordinate;
 
     public void setCoordinate(int x, int y) {
-        Coordinate coordinate = new Coordinate(x,y);
+        Coordinate coordinate = new Coordinate(x, y);
         this.coordinate = coordinate;
     }
 
@@ -23,20 +23,20 @@ public class Pawn {
     }
 
 
-
     public boolean isCrowned() {
         return this.isCrowned;
     }
 
     @Override
     public String toString() {
-        if(!isCrowned) {
+        if (!isCrowned) {
             return color.getColor().equals("white") ? "☻" : "☺";
         }
         return color.getColor().equals("white") ? "■" : "⌂";
 
     }
 
+    //TODO return Color type
     public String getColor() {
         return this.color.getColor();
     }
