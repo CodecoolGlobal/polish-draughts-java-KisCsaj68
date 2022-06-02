@@ -56,7 +56,7 @@ public class Game {
 
     private boolean isValidDiagonalMove(Player player, int moveFromX, int moveFromY, int moveToX, int moveToY) {
         return checkDiagonalMove(moveFromX, moveFromY, moveToX, moveToY) &&
-                checkValidDiagMoveToOppnentWay(player, moveFromX, moveToX) &&
+                checkValidDiagMoveToOppnentWay(player, moveFromX, moveToX, moveFromY) &&
                 isValidJump(moveFromX, moveFromY, moveToX, moveToY, player);
     }
 
@@ -138,12 +138,19 @@ public class Game {
 
     }
 
-    public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo) {
+    public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo, int columnFrom) {
         if (player.getColor().equals("black")) {
+            if(this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
+                return true;
+            }
             return rowFrom < rowTo;
         } else {
+            if(this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
+                return true;
+            }
             return rowTo < rowFrom;
         }
+
     }
 
     public static String theWinner(Player player) {

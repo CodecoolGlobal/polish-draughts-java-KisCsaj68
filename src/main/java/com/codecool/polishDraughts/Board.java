@@ -81,6 +81,9 @@ public class Board {
         }
     }
 
+    public boolean checkPawnCrowned(int x, int y) {
+        return board[x][y].isCrowned();
+    }
     public boolean checkPlayerAndPawnColor(Player player, int row, int column) {
         if (this.board[row][column] == null) {
             return false;
