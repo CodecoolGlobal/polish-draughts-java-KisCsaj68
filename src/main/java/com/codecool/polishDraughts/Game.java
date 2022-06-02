@@ -19,10 +19,7 @@ public class Game {
         Player winner = null;
         while (checkForWinner() == null) {
             playRound(playerOne);
-            this.gameBoard.toString();
-            System.out.println("--------------------------------");
             playRound(playerTwo);
-            this.gameBoard.toString();
         }
 
         this.gameBoard.toString();
