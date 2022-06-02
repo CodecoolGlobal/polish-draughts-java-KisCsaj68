@@ -47,6 +47,13 @@ public class Player {
         System.out.println(question);
         Scanner userInput = new Scanner(System.in);
         String input = userInput.next();
+        if (input.equals("Q") || input.equals("q") || input.equals("QUIT") || input.equals("quit")) {
+            System.exit(0);
+        }
+        if (input.equals("c")){
+            return null;
+        }
+
         if (input.length() != 2) {
             throw new Exception();
         }

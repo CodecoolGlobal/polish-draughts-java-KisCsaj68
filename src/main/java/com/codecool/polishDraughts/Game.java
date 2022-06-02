@@ -90,6 +90,7 @@ public class Game {
         try {
             int[] userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
                     player.getColor().substring(1) + " player, enter coordinate Pawn to pick: ");
+
             rowFrom = userInput[0] - POSITION_A;
             column = userInput[1];
 
@@ -103,11 +104,18 @@ public class Game {
     public Coordinate getMovePawnTo(Player player) {
         int rowTo = -1;
         int column = -1;
+        int[] userInput;
         try {
-            int[] userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
+            userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
                     player.getColor().substring(1) + " player, coordinate field to move: ");
-            rowTo = userInput[0] - POSITION_A;
-            column = userInput[1];
+            if(userInput == null) {
+                getMovePawnFrom(player);
+                getMovePawnTo(player);
+            }else {
+
+                rowTo = userInput[0] - POSITION_A;
+                column = userInput[1];
+            }
 
         } catch (Exception e) {
 
@@ -124,7 +132,6 @@ public class Game {
 
     public Player checkForWinner() {
         return this.gameBoard.hasZeroPawn(playerOne, playerTwo);
-
     }
 
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo, int columnFrom) {
@@ -139,7 +146,6 @@ public class Game {
             }
             return rowTo < rowFrom;
         }
-
     }
 
     public static String theWinner(Player player) {
