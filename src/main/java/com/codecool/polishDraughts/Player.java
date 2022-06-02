@@ -1,6 +1,4 @@
 package com.codecool.polishDraughts;
-
-import java.io.CharConversionException;
 import java.util.Scanner;
 
 public class Player {
@@ -19,31 +17,9 @@ public class Player {
         this.color = color;
     }
 
-    public int getUserInputRow(String question) throws Exception{
-        System.out.println(question);
-        Scanner userInput = new Scanner(System.in);
-        String row = userInput.next().toLowerCase();
-        if (row.length() != 1) {
-            throw new Exception();
-        }
-        char result = row.charAt(0);
-        return (int)result;
-    }
 
-    public int getUserInputColumn(String question) {
-        System.out.println(question);
-        Scanner userInput = new Scanner(System.in);
-        try{
-            int column = userInput.nextInt();
-            return column -1;
-        }
-        catch (Exception e) {
-            return -1;
-        }
-    }
-
-    public int[] getUserInput(String question) throws InterruptPlayRound, InvalidUserInputLength{
-        int[] result = new int[2];
+    public Coordinate getUserInput(String question) throws InterruptPlayRound, InvalidUserInputLength{
+        Coordinate result = new Coordinate(0,0);
         System.out.println(question);
         Scanner userInput = new Scanner(System.in);
         String input = userInput.next();
@@ -54,16 +30,16 @@ public class Player {
             throw new InterruptPlayRound();
         }
 
-        if (input.length() != 2) {
+        if (input.length() > 3) {
             throw new InvalidUserInputLength();
         }
         char row = input.substring(0,1).toLowerCase().charAt(0);
-        result[0] = (int)row;
+        result.setX((int)row);
         try {
             int column = Integer.parseInt(input.substring(1));
-            result[1] = column - 1;
+            result.setY(column-1);
         }catch (Exception e) {
-            result[1] = -1;
+            result.setY(-1);
         }
 
     return result;

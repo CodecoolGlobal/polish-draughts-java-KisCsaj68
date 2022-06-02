@@ -8,8 +8,8 @@ public class PolishDraughts {
         System.out.println("Please define the board size(Between 10 and 20):");
         int size = getBoardSize();
         while (!isValidBoardSize(size)) {
-            System.out.println("Invalid board size! Try again!");
-            getBoardSize();
+            System.err.println("Invalid board size! Try again!");
+            size = getBoardSize();
         }
         Game newGame = new Game(size);
         newGame.start();
