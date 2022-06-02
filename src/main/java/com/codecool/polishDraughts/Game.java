@@ -86,45 +86,33 @@ public class Game {
 
     public Coordinate getMovePawnFrom(Player player) {
         int rowFrom = -1;
+        int column = -1;
         try {
-            rowFrom = player.getUserInputRow(player.getColor().substring(0, 1).toUpperCase() +
-                                                player.getColor().substring(1) + " player, enter row for Pawn to pick: ") - POSITION_A;
+            int[] userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
+                    player.getColor().substring(1) + " player, enter coordinate Pawn to pick: ");
+            rowFrom = userInput[0] - POSITION_A;
+            column = userInput[1];
+
         } catch (Exception e) {
 
         }
-        int column = player.getUserInputColumn(player.getColor().substring(0, 1).toUpperCase() +
-                                                    player.getColor().substring(1) + " player,  enter column for Pawn to pick: ");
         Coordinate result = new Coordinate(rowFrom, column);
-
-//        int row = (int) player.getUserInputRow("Row from move: " + player.getColor());
-//        Coordinate result = new Coordinate(row, column);
-//        Character rowFrom = player.getUserInputRow("Row from move: " + player.getColor());
-//        int columnFrom = player.getUserInput("Column from move: " + player.getColor());
-//
-//        result[0] = rowFrom;
-//        result[1] = columnFrom;
-
         return result;
     }
 
     public Coordinate getMovePawnTo(Player player) {
         int rowTo = -1;
+        int column = -1;
         try {
-            rowTo = player.getUserInputRow(player.getColor().substring(0, 1).toUpperCase() +
-                                                player.getColor().substring(1) + " player, enter row for place to move: ") - POSITION_A;
+            int[] userInput = player.getUserInput(player.getColor().substring(0, 1).toUpperCase() +
+                    player.getColor().substring(1) + " player, coordinate field to move: ");
+            rowTo = userInput[0] - POSITION_A;
+            column = userInput[1];
+
         } catch (Exception e) {
 
         }
-        int columnTo = player.getUserInputColumn(player.getColor().substring(0, 1).toUpperCase() +
-                                                    player.getColor().substring(1) + " player, enter column for place to move: ");
-        Coordinate result = new Coordinate(rowTo, columnTo);
-//        int[] result = new int[2];
-//        int rowTo = (int)player.getUserInputRow("Row to move: " + player.getColor());
-//        int columnTo = player.getUserInput("Column to move: " + player.getColor());
-//
-//        result[0] = rowTo;
-//        result[1] = columnTo;
-
+        Coordinate result = new Coordinate(rowTo, column);
         return result;
     }
 
@@ -141,12 +129,12 @@ public class Game {
 
     public boolean checkValidDiagMoveToOppnentWay(Player player, int rowFrom, int rowTo, int columnFrom) {
         if (player.getColor().equals("black")) {
-            if(this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
+            if (this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
                 return true;
             }
             return rowFrom < rowTo;
         } else {
-            if(this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
+            if (this.gameBoard.checkPawnCrowned(rowFrom, columnFrom)) {
                 return true;
             }
             return rowTo < rowFrom;
