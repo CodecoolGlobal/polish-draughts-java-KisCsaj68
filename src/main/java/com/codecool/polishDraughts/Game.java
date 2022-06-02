@@ -19,10 +19,7 @@ public class Game {
         Player winner = null;
         while (checkForWinner() == null) {
             playRound(playerOne);
-            this.gameBoard.toString();
-            System.out.println("--------------------------------");
             playRound(playerTwo);
-            this.gameBoard.toString();
         }
 
         this.gameBoard.toString();
@@ -90,11 +87,13 @@ public class Game {
     public Coordinate getMovePawnFrom(Player player) {
         int rowFrom = -1;
         try {
-            rowFrom = player.getUserInputRow(player.getColor() + " Player: Enter row for Pawn to pick: ") - POSITION_A;
+            rowFrom = player.getUserInputRow(player.getColor().substring(0, 1).toUpperCase() +
+                                                player.getColor().substring(1) + " player, enter row for Pawn to pick: ") - POSITION_A;
         } catch (Exception e) {
 
         }
-        int column = player.getUserInputColumn(player.getColor() + " Player: Enter column for Pawn to pick: ");
+        int column = player.getUserInputColumn(player.getColor().substring(0, 1).toUpperCase() +
+                                                    player.getColor().substring(1) + " player,  enter column for Pawn to pick: ");
         Coordinate result = new Coordinate(rowFrom, column);
 
 //        int row = (int) player.getUserInputRow("Row from move: " + player.getColor());
@@ -111,11 +110,13 @@ public class Game {
     public Coordinate getMovePawnTo(Player player) {
         int rowTo = -1;
         try {
-            rowTo = player.getUserInputRow(player.getColor() + " Player: Enter row for place to move: ") - POSITION_A;
+            rowTo = player.getUserInputRow(player.getColor().substring(0, 1).toUpperCase() +
+                                                player.getColor().substring(1) + " player, enter row for place to move: ") - POSITION_A;
         } catch (Exception e) {
 
         }
-        int columnTo = player.getUserInputColumn(player.getColor() + " Player: Enter column for place to move: ");
+        int columnTo = player.getUserInputColumn(player.getColor().substring(0, 1).toUpperCase() +
+                                                    player.getColor().substring(1) + " player, enter column for place to move: ");
         Coordinate result = new Coordinate(rowTo, columnTo);
 //        int[] result = new int[2];
 //        int rowTo = (int)player.getUserInputRow("Row to move: " + player.getColor());
