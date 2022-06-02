@@ -135,6 +135,7 @@ public class Board {
     public boolean isOppositePawnBetween(int moveFromX, int moveFromY, int moveToX, int moveToY, Player player) {
         String color = player.getColor();
         if (moveFromX < moveToX && moveFromY < moveToY) {
+            // 1,1
             for (int i = moveFromX; i <= moveToX; i++) {
                 if (this.board[i][moveFromY + i] != null && !this.board[i][moveFromY + i].getColor().equals(color)) {
                     removePawn(i, moveFromY + i);
@@ -143,6 +144,7 @@ public class Board {
 
             }
         } else if (moveFromX < moveToX && moveFromY > moveToY) {
+            //1, -1
             for (int i = moveFromX; i <= moveToX; i++) {
                 if (this.board[i][moveFromY - i] != null && !this.board[i][moveFromY - i].getColor().equals(color)) {
                     removePawn(i, moveFromY - i);
@@ -151,6 +153,7 @@ public class Board {
             }
 
         } else if (moveFromX > moveToX && moveFromY < moveToY) {
+            //-1, 1
             for (int i = moveFromX; i <= moveToX; i--) {
                 if (this.board[i][moveFromY + i] != null && !this.board[i][moveFromY + i].getColor().equals(color)) {
                     removePawn(i, moveFromY + i);
@@ -158,6 +161,7 @@ public class Board {
                 }
             }
         } else if (moveFromX > moveToX && moveFromY > moveToY) {
+            //-1, -1
             for (int i = moveFromX; i <= moveToX; i--) {
                 if (this.board[i][moveFromY - i] != null && !this.board[i][moveFromY - i].getColor().equals(color)) {
                     removePawn(i, moveFromY - i);
