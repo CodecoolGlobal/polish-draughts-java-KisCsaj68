@@ -24,6 +24,8 @@ public class Player {
         Scanner userInput = new Scanner(System.in);
         String input = userInput.next();
         if (input.equals("Q") || input.equals("q") || input.equals("QUIT") || input.equals("quit")) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             System.exit(0);
         }
         if (input.equals("c")){

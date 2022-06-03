@@ -18,7 +18,11 @@ public class Game {
     public void start() {
         Player winner = null;
         while (checkForWinner() == null) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             playRound(playerOne);
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             playRound(playerTwo);
         }
         this.gameBoard.printBoard();
@@ -27,9 +31,13 @@ public class Game {
     }
 
     public void playRound(Player player) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         boolean hasException = true;
         while (hasException) {
             try {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
                 this.gameBoard.printBoard();
                 Coordinate moveFrom = getFromMove(player);
                 while (invalidPawnPick(player, moveFrom)) {
@@ -99,7 +107,8 @@ public class Game {
         Coordinate userInput = null;
         try {
             String color = player.getColor();
-            userInput = player.getUserInput("%s%s%s".formatted(color.substring(0, 1).toUpperCase(), color.substring(1), question));
+            userInput = player.getUserInput("%s%s%s".formatted(color.substring(0, 1).toUpperCase(),
+                                            color.substring(1), question));
 
             userInput.setX(userInput.getX() - POSITION_A);
 
